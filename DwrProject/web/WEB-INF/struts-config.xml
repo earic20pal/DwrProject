@@ -12,13 +12,14 @@
     </form-beans>
     
     <global-exceptions>
-    
     </global-exceptions>
 
-    <global-forwards>
+  <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
     </global-forwards>
 
     <action-mappings>
+        <action path="/Welcome" forward="/welcome.jsp"/>
         <action path="/LoginAction"
 		type="com.myapp.action.LoginAction"
 		name="CustomerForm" scope="request" validate="false" parameter="method" >
