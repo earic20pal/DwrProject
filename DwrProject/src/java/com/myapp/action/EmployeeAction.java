@@ -65,4 +65,17 @@ public class EmployeeAction extends DispatchAction {
         System.out.println("=================Get Message From Ajax===============");
         return "Hello Ajax from Server";
     }
+    public ActionForward UpdateEmp(ActionMapping mapping,ActionForm form,
+		HttpServletRequest request,HttpServletResponse response)
+    {
+        String empno=request.getParameter("empno");
+        String firstname=request.getParameter("firstname");
+        String lastname=request.getParameter("lastname");
+        String birth_date=request.getParameter("birth_date");
+        String hire_date=request.getParameter("hire_date");
+        String gender=request.getParameter("gender");
+        EmployeeDao empdao= new EmployeeDao();
+        empdao.updateEmployeeDetails(empno,firstname,lastname,birth_date,hire_date,gender);
+        return mapping.findForward("success");
+    }
 }
