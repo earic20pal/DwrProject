@@ -46,4 +46,25 @@ public class EmployeeDao {
         return emplist;
     }
 
+    public Map getDetails(String empname) {
+        
+        String[] str=empname.split(" ");
+        
+        SessionFactory factory = NewHibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Criteria crit = session.createCriteria(Employees.class);
+       
+        crit.add(Restrictions.eq("firstName", str[0]));
+        crit.add(Restrictions.eq("lastName", str[1]));
+        List<Employees> employees = crit.list();
+        Map emplist = new HashMap();
+       for (Employees obj : employees) {
+          emplist.put("BirthDate", obj.getBirthDate());
+          emplist.put("EmpNo", obj.getBirthDate());
+          emplist.put("gender", obj.getBirthDate());
+          emplist.put("hiredate", obj.getBirthDate());
+        }
+        return emplist;
+    }
+
 }

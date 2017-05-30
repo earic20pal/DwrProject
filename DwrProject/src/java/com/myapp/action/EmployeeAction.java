@@ -53,6 +53,13 @@ public class EmployeeAction extends DispatchAction {
         employee=empdao.getAllEmployees(empname);
         return employee;
     }
+    public Map getDetails(String empname) {
+        System.out.println("=================Get Message From Ajax===============");
+        Map employee = new HashMap();
+        EmployeeDao empdao= new EmployeeDao();
+        employee=empdao.getDetails(empname);
+        return employee;
+    }
 
     public String getMessagefromAjax() {
         System.out.println("=================Get Message From Ajax===============");

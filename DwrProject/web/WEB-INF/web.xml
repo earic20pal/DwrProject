@@ -17,6 +17,10 @@
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>dwr-invoker</servlet-name>
         <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
@@ -33,10 +37,6 @@
     <servlet-mapping>
         <servlet-name>dwr-invoker</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>action</servlet-name>
-        <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

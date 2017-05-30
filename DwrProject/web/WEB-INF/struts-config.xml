@@ -19,7 +19,7 @@
     </global-forwards>
 
     <action-mappings>
-        <action path="/Welcome" forward="/welcome.jsp"/>
+        <action path="/Welcome" forward="/index.jsp"/>
         <action path="/LoginAction"
 		type="com.myapp.action.LoginAction"
 		name="CustomerForm" scope="request" validate="false" parameter="method" >
