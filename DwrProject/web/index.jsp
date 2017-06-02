@@ -47,6 +47,14 @@
                     }
                 });
             }
+            function getAllEmpdetails()
+            {
+                 EmployeeAction.getMessagefromAjax(function (data) {
+                $('#allempdetail').html(data);
+            });
+                
+                
+            }
             function fill()
             {
                 $(function () {
@@ -82,7 +90,7 @@
             <div>
                 <center><h4>Welcome to employee Database</h4></center>
                 <div id="horizontalmenu">
-                    <ul id="menu">
+                    <ul id="menu">  
                         <li><a href="Welcome.htm">Home</a></li>
                         <!--                        <li><a href="Welcome.htm">Employe</a></li>
                                                 <li><a href="home">Employee2</a></li>
@@ -98,6 +106,8 @@
                     <tr><h4>Using DWR</h4></tr><br>
                     <tr><input type="text" id="username" placeholder="Search Employee by name" name="username" onkeyup="fill()"/>
                     <input type="button" value="click me!" onclick="getdetails()"/>
+                    <input type="button" value="Show Employees!" onclick="getAllEmpdetails()"/>
+                    <div id="allempdetail" name="allempdetail" ></div>
                     </tr><br>
 
 
@@ -105,6 +115,10 @@
                 <div id="details" style="display: none; background-color: grey; height: 30%; width: 100%;">
                     <table>
                         
+                        <tr>
+                         
+                            <td><input type="hidden" id="empno" name="empno" /></td>
+                        </tr>
                         <tr>
                             <td>firstname is</td>
                             <td><input type="text" id="firstname" name="firstname" /></td>
@@ -159,10 +173,9 @@
             }
             function deleteEmp()
             {
-                EmployeeAction.getMessagefromDWR({callback: function (data) {
-                        alert(data);
-                    }
-                });
+               document.forms[0].action = "EmployeeAction.htm";
+                document.forms[0].method.value = "DeleteEmp";
+                document.forms[0].submit();
             }
 
         </script>

@@ -62,8 +62,10 @@ public class EmployeeAction extends DispatchAction {
     }
 
     public String getMessagefromAjax() {
-        System.out.println("=================Get Message From Ajax===============");
-        return "Hello Ajax from Server";
+        EmployeeDao empdao= new EmployeeDao();
+        String data=empdao.getAllEmployees();
+        return data;
+//        return "<h4>Hello Ajax from Server</h4>";
     }
     public ActionForward UpdateEmp(ActionMapping mapping,ActionForm form,
 		HttpServletRequest request,HttpServletResponse response)
@@ -76,6 +78,19 @@ public class EmployeeAction extends DispatchAction {
         String gender=request.getParameter("gender");
         EmployeeDao empdao= new EmployeeDao();
         empdao.updateEmployeeDetails(empno,firstname,lastname,birth_date,hire_date,gender);
+        return mapping.findForward("success");
+    }
+    public ActionForward DeleteEmp(ActionMapping mapping,ActionForm form,
+		HttpServletRequest request,HttpServletResponse response)
+    {
+        String empno=request.getParameter("empno");
+        String firstname=request.getParameter("firstname");
+        String lastname=request.getParameter("lastname");
+        String birth_date=request.getParameter("birth_date");
+        String hire_date=request.getParameter("hire_date");
+        String gender=request.getParameter("gender");
+        EmployeeDao empdao= new EmployeeDao();
+        empdao.deleteEmployeeDetails(empno,firstname,lastname,birth_date,hire_date,gender);
         return mapping.findForward("success");
     }
 }

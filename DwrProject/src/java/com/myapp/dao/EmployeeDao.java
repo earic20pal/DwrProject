@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -71,17 +72,77 @@ public class EmployeeDao {
     }
 
     public void updateEmployeeDetails(String empno, String firstname, String lastname, String birth_date, String hire_date, String gender) {
-        
-        SessionFactory factory= NewHibernateUtil.getSessionFactory();
-        Session session= factory.openSession();
-        Transaction tr= session.beginTransaction();
+        SessionFactory factory = NewHibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Transaction tr = session.beginTransaction();
+        try {
+            System.out.println("emp no is " + empno);
+            int i = Integer.parseInt(empno);
+            Employees emp = (Employees) session.get(Employees.class, i);
+            emp.setFirstName(firstname);
+            session.update(emp);
+            tr.commit();
+
+        } catch (Exception ex) {
+            tr.rollback();
+        } finally {
+            session.close();
+        }
+
+    }
+
+    public void deleteEmployeeDetails(String empno, String firstname, String lastname, String birth_date, String hire_date, String gender) {
+        SessionFactory factory = NewHibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Transaction tr = session.beginTransaction();
         Integer i = Integer.parseInt(empno);
-        Employees emp= (Employees) session.get(Employees.class, i);
+        Employees emp = (Employees) session.get(Employees.class, i);
         emp.setFirstName(firstname);
-        session.update(emp);
+        session.delete(emp);
         tr.commit();
         session.close();
-        
+
+    }
+
+    public String getAllEmployees() {
+        SessionFactory factory = NewHibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+         StringBuilder builder=  new StringBuilder();
+        try {
+            SQLQuery query=session.createSQLQuery("select * from employees");
+            List<Object[]> rows= query.list();
+            int start=0;
+           
+            builder.append("<table>");
+            for(Object[] obj: rows)
+            {
+                builder.append("<tr>");
+                String empid=obj[0].toString();
+                builder.append("<td>"+empid+"</td>");
+                String birthdate=obj[1].toString();
+                 builder.append("<td>"+birthdate+"</td>");
+                String firstname=obj[2].toString();
+                 builder.append("<td>"+firstname+"</td>");
+                String lastname=obj[3].toString();
+                 builder.append("<td>"+lastname+"</td>");
+                String gender=obj[4].toString();
+                 builder.append("<td>"+gender+"</td>");
+                String hiredate=obj[5].toString();
+                 builder.append("<td>"+hiredate+"</td>");
+                builder.append("</tr><br>");    
+            }
+            builder.append("</table>");
+            tx.commit();
+
+        } catch (Exception ex) {
+            tx.rollback();
+        } finally {
+            session.close();
+
+        }
+        return builder.toString();
+
     }
 
 }
